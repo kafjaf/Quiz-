@@ -33,7 +33,7 @@ export class QuizGame {
     const pseudo = this.identityStore.pseudo();
 
     // Remplace par ton lien Vercel une fois déployé !
-    const appUrl = 'https://quiz-lock.vercel.app'; 
+    const appUrl = 'https://quiz-vert-two.vercel.app/'; 
 
     const message = `🔥 *DÉFI QUIZ LOCK* 🔥%0A%0A` +
                     `Je viens de faire un score de *${score}/${total}* ! 🏆%0A` +
