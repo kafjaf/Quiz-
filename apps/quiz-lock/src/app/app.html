@@ -1,2 +1,28 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+
+
+  <main class="bg-slate-950 min-h-screen">
+
+      @if (currentView() === 'intro') {
+        <ql-intro (finish)="completeIntro()"></ql-intro>
+      }
+  
+  @if (currentView() === 'welcome') {
+    <ql-welcome (startQuiz)="currentView.set('game')"></ql-welcome>
+  }
+
+  @else if (currentView() === 'game') {
+    <ql-quiz-game (showLeaderboard)="currentView.set('leaderboard')"></ql-quiz-game>
+  }
+
+  @else if (currentView() === 'leaderboard') {
+    <ql-leaderboard-feature></ql-leaderboard-feature>
+    
+    <!-- Bouton pour revenir au jeu -->
+    <div class="fixed bottom-8 left-0 right-0 flex justify-center">
+      <button (click)="currentView.set('game')" class="bg-blue-600 px-8 py-4 rounded-2xl font-bold text-white shadow-xl">
+        🎮 REJOUER
+      </button>
+    </div>
+  }
+
+</main>

@@ -1,0 +1,17 @@
+{
+  "name": "quiz-feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/quiz/feature/src",
+  "prefix": "ql",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/angular:unit-test",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

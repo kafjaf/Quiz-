@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+  .animate-glow-slow {
+    background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #020617);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #020617;
+}

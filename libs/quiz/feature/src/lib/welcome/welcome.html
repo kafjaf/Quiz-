@@ -1,0 +1,148 @@
+<div
+  class="min-h-[100dvh] pb-safe animate-glow-slow flex flex-col items-center justify-start sm:justify-center p-4 text-white overflow-hidden relative"
+>
+  <!-- DÉCOMPTE PLEIN ÉCRAN (S'affiche par dessus tout) -->
+  @if (count() !== 0) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-3xl"
+  >
+    <h1
+      class="text-[12rem] font-black italic animate-bounce text-blue-500 drop-shadow-[0_0_50px_rgba(59,130,246,0.5)]"
+    >
+      {{ count() }}
+    </h1>
+  </div>
+  }
+
+  <div
+    class="w-full max-w-sm flex flex-col gap-4 text-center relative z-10 pt-4 sm:pt-0"
+  >
+    <!-- TITRE & SURVIVAL BADGE -->
+    <div class="space-y-1">
+      <div
+        class="inline-block px-3 py-0.5 rounded-full border border-orange-500/50 bg-orange-500/10 text-orange-500 text-[8px] font-black uppercase tracking-widest animate-pulse"
+      >
+        Survival Mode
+      </div>
+      <h1
+        class="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-none"
+      >
+        Quiz <span class="text-blue-500 text-4xl sm:text-7xl">Lock</span>
+      </h1>
+    </div>
+
+    <!-- CARTE DE RÉGLAGES -->
+    <div
+      class="bg-white/5 border border-white/10 p-5 sm:p-8 rounded-[2rem] backdrop-blur-2xl shadow-2xl"
+    >
+      <!-- STATS DU DÉFI -->
+      <div class="flex justify-around mb-4 border-b border-white/5 pb-3">
+        <div class="flex flex-col">
+          <span class="text-xl font-black italic">100</span>
+          <span
+            class="text-[7px] text-gray-500 uppercase font-bold tracking-widest"
+            >Questions</span
+          >
+        </div>
+        <div class="w-px h-6 bg-white/10 my-auto"></div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black text-orange-500 italic">07s</span>
+          <span
+            class="text-[7px] text-gray-500 uppercase font-bold tracking-widest"
+            >Temps Limite</span
+          >
+        </div>
+      </div>
+
+      <p class="text-white text-sm mb-6 leading-relaxed">
+        Défie tes potes, domine le classement.<br />
+        <!-- <span class="text-white font-bold">Le test ultime de réflexes.</span> -->
+      </p>
+
+      <div class="space-y-2">
+        <input
+          type="text"
+          [(ngModel)]="tempPseudo"
+          placeholder="Pseudo"
+          class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:ring-2 focus:ring-blue-500 text-base text-center font-bold"
+        />
+
+        <button
+          (click)="start()"
+          class="w-full bg-blue-600 text-white font-black py-4 rounded-xl transition-all active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.3)] uppercase text-xs tracking-widest"
+        >
+          Lancer le défi
+        </button>
+      </div>
+
+      <!-- BOUTON RÉCUPÉRER (Grisé) -->
+      <!-- <div class="mt-4">
+        @if (!isFounder()) {
+        <ql-button variant="secondary" (clicked)="onRecoverClick()">
+          Récupérer mon compte
+        </ql-button>
+        } @else {
+        <div
+          class="flex items-center justify-center gap-2 text-blue-400 font-bold text-sm bg-blue-500/10 py-3 rounded-2xl border border-blue-500/20"
+        >
+          <span>✨ FUTUR MEMBRES</span>
+        </div>
+        }
+      </div> -->
+      <!-- Bouton Récupérer / Support -->
+      <div class="mt-4">
+        <ql-button variant="secondary" (clicked)="onRecoverClick()">
+          <div class="flex items-center justify-center gap-2">
+            <span>Récupérer mon compte</span>
+            <!-- Petit indicateur WhatsApp discret -->
+            <span
+              class="text-[8px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded border border-green-500/30"
+            >
+              Direct
+            </span>
+          </div>
+        </ql-button>
+
+        <!-- Petit texte de rassurance -->
+        <p class="text-[8px] text-gray-600 mt-2 italic uppercase">
+          Contact direct avec le créateur via WhatsApp
+        </p>
+      </div>
+      <!-- MODALE DE WAITLIST -->
+      <!-- @if (showFounderModal()) {
+      <ql-modal>
+        <h2 class="text-2xl font-black mb-4">
+          SAUVEGARDE <span class="text-blue-500">CLOUD</span>
+        </h2>
+        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+          Nous préparons la sauvegarde de tes scores pour l'après Afrotaku !
+          Laisse ton email pour devenir <b>Membre</b>.
+        </p>
+
+        <input
+          type="email"-
+          [value]="email()"
+          (input)="email.set($any($event.target).value)"
+          placeholder="ton@email.com"
+          class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
+        />
+
+        <div class="space-y-3">
+          <ql-button (clicked)="joinWaitlist()">REJOINDRE LA LISTE</ql-button>
+          <button
+            (click)="showFounderModal.set(false)"
+            class="text-xs text-gray-500 uppercase font-bold tracking-widest"
+          >
+            Plus tard
+          </button>
+        </div>
+      </ql-modal>
+      } -->
+      <p
+        class="text-[10px] text-gray-600 font-bold tracking-widest uppercase italic"
+      >
+        Version Survival v1.0
+      </p>
+    </div>
+  </div>
+</div>

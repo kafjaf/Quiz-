@@ -14,7 +14,22 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@quiz-lock/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@quiz-lock/shared-util": ["libs/shared/util/src/index.ts"],
+      "@quiz-lock/quiz-feature": ["libs/quiz/feature/src/index.ts"],
+      "@quiz-lock/profile-feature": ["libs/profile/feature/src/index.ts"],
+      "@quiz-lock/identity-data-access": [
+        "libs/identity/data-access/src/index.ts"
+      ],
+      "@quiz-lock/quiz-data-access": ["libs/quiz/data-access/src/index.ts"],
+      "@quiz-lock/leaderboard-data-access": [
+        "libs/leaderboard/data-access/src/index.ts"
+      ],
+      "@quiz-lock/leaderboard-feature": [
+        "libs/leaderboard/feature/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

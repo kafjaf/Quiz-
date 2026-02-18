@@ -8,7 +8,9 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/quiz-lock",
         "browser": "apps/quiz-lock/src/main.ts",
@@ -20,7 +22,9 @@
             "input": "apps/quiz-lock/public"
           }
         ],
-        "styles": ["apps/quiz-lock/src/styles.scss"]
+        "styles": [
+          "apps/quiz-lock/src/styles.scss"
+        ]
       },
       "configurations": {
         "production": {
@@ -36,7 +40,8 @@
               "maximumError": "8kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "serviceWorker": "apps/quiz-lock/ngsw-config.json"
         },
         "development": {
           "optimization": false,
