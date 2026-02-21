@@ -10,7 +10,7 @@ import { computed } from '@angular/core';
 import { Question, GameStatus } from './quiz.model';
 import { MOCK_QUESTIONS } from './quiz.mock';
 
-const TIME_PER_QUESTION = 7; // secondes
+const TIME_PER_QUESTION = 10; // secondes
 
 export const QuizStore = signalStore(
   { providedIn: 'root' },

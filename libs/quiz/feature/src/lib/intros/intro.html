@@ -1,28 +1,62 @@
-<div class="min-h-screen bg-slate-950 text-white flex flex-col p-6 md:p-12 overflow-y-auto selection:bg-blue-500">
-  <main class="flex-1 flex flex-col justify-center max-w-3xl mx-auto space-y-6 md:space-y-10">
-    <h1 class="text-4xl md:text-7xl font-black italic tracking-tighter leading-[0.85] uppercase">
-      Félicitations, <br />
-      <span class="text-blue-600 text-5xl md:text-8xl">Bande de génies.</span>
-    </h1>
+<div class="h-[100dvh] bg-slate-950 text-white flex flex-col p-4 overflow-hidden selection:bg-blue-500 justify-between">
+  
+  <!-- 1. HEADER (Minimaliste) -->
+  <header class="flex flex-col items-center pt-2 animate-fade-in">
+    <img src="/icons/web-app-manifest-192x192.png" alt="Logo" class="w-10 h-10 mb-1">
+    <span class="text-[7px] font-black tracking-[0.4em] uppercase text-gray-600">Projet Quiz Lock</span>
+  </header>
 
-    <div class="space-y-8 text-lg md:text-2xl text-gray-400 font-medium leading-relaxed animate-fadeInDelay">
-      <p class="border-l-4 border-blue-600 pl-6 italic bg-blue-600/5 py-4">
-        "Le monde n'a pas besoin d'un énième fan de manga. <br />
-        Il a besoin d'un <span class="text-white">survivant</span>."
-      </p>
-    </div>
+  <!-- 2. MAIN CONTENT (Centré et tassé) -->
+  <main class="flex-1 flex flex-col justify-center space-y-4">
     
-    <div class="pt-10 flex flex-col md:flex-row items-center gap-6 animate-fadeInDelay2">
-      <button (click)="finishIntro()" class="w-full bg-white text-black py-5 font-black uppercase text-sm tracking-[0.2em] relative overflow-hidden transition-all active:scale-95 animate-button-pulse flex items-center justify-center gap-3">
-        <lucide-icon name="zap" class="w-5 h-5 text-blue-600" [strokeWidth]="3"></lucide-icon>
-        ENTRER DANS LE PROJET
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent -translate-x-full animate-shimmer"></div>
-      </button>
+    <!-- TITRE (Réduit pour mobile) -->
+    <div class="animate-slide-up">
+      <h1 class="text-3xl font-black italic tracking-tighter leading-none uppercase">
+        Félicitations, <br />
+        <span class="text-blue-600 text-4xl">Bande de génies.</span>
+      </h1>
+    </div>
+
+    <!-- CITATION (Plus compacte) -->
+    <div class="animate-slide-up-delay-1">
+      <div class="flex items-center gap-2 mb-1">
+        <div class="w-1 h-1 bg-blue-600"></div>
+        <span class="text-[10px] font-bold text-blue-600  tracking-widest">Sender: Oxymore</span>
+      </div>
       
-      <p class="text-[9px] text-gray-500 font-bold uppercase tracking-widest text-center leading-relaxed">
-        Accès testeur : <span class="text-green-500 italic">Gratuit</span> <br/>
-        <span class="text-blue-400 opacity-80">Version Pro (500 FCFA) : Bientôt disponible</span>
-      </p>
+      <div class="relative">
+        <div class="absolute -left-3 top-0 bottom-0 w-0.5 bg-blue-600"></div>
+        <div class="bg-blue-600/5 p-4 italic text-sm text-gray-300 leading-snug border border-white/5">
+          "Le monde n'a pas besoin d'un énième fan de manga. <br />
+          Il a besoin d'un <span class="text-white font-bold">survivant</span>."
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION (Bouton et Teasing) -->
+    <div class="space-y-4 animate-slide-up-delay-2">
+      <button (click)="finishIntro()"
+        class="w-full bg-white text-black py-4 rounded-sm font-black uppercase text-xs tracking-[0.2em] 
+               flex items-center justify-center gap-3 relative overflow-hidden active:scale-95 transition-all animate-button-pulse"
+      >
+        <lucide-icon name="zap" class="w-4 h-4 text-blue-600" [strokeWidth]="3"></lucide-icon>
+        <span>ENTRER DANS LE PROJET</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent -translate-x-full animate-shimmer"></div>
+      </button>
+
+      <div class="text-center">
+        <p class="text-[9px] text-gray-500 font-bold uppercase tracking-widest leading-none">
+          Accès : <span class="text-green-500 italic">Gratuit</span>
+          <span class="mx-2 text-gray-800">|</span>
+          <span class="text-blue-400 opacity-80 italic">Pro : Bientôt(500FCA/mois)</span>
+        </p>
+      </div>
     </div>
   </main>
+
+  <!-- 3. FOOTER (Une seule ligne) -->
+  <footer class="pb-2 flex justify-between border-t border-white/5 pt-2 opacity-30 animate-fade-in">
+    <a href="https://chat.whatsapp.com/D1r3pRZoiHc0E9WpIpzetW" target="_blank" class="text-[9px] font-bold uppercase tracking-tighter">Afrotaku</a>
+    <a href="https://www.linkedin.com/in/erasme-mayetela-b6229a209/" target="_blank" class="text-[9px] font-bold uppercase tracking-tighter">Architecte (Dev)</a>
+  </footer>
 </div>
