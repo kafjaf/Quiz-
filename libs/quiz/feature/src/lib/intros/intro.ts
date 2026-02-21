@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, output } from '@angular/core';
 import { Button } from '@quiz-lock/shared-ui';
+import { LucideAngularModule } from 'lucide-angular'; 
+
 
 @Component({
   selector: 'ql-intro',
   standalone : true,
-  imports: [CommonModule], //, Button
+  imports: [CommonModule, LucideAngularModule], //, Button
   templateUrl: './intro.html',
   styleUrl: './intro.css',
 })

@@ -3,11 +3,13 @@ import { Component, inject, output, signal } from '@angular/core';
 import { IdentityStore } from '@quiz-lock/identity-data-access';
 import { QuizStore } from '@quiz-lock/quiz-data-access';
 import { Button, ProgressBar } from '@quiz-lock/shared-ui';
+import { LucideAngularModule } from 'lucide-angular'; 
+
 
 @Component({
   selector: 'ql-quiz-game',
   standalone: true,
-  imports: [CommonModule, ProgressBar, Button],
+  imports: [CommonModule, ProgressBar, Button, LucideAngularModule],
   templateUrl: './quiz-game.html',
   styleUrl: './quiz-game.css',
 })
@@ -18,6 +20,8 @@ export class QuizGame {
 
     // Signal pour la modale Premium
   isPremiumModalOpen = signal(false);
+
+  
 
   openPremiumModal() {
     this.isPremiumModalOpen.set(true);
@@ -42,4 +46,27 @@ export class QuizGame {
     // On ouvre WhatsApp
     window.open(`https://wa.me/?text=${message}`, '_blank');
   }
+
+  nativeShare() {
+  const score = this.store.score();
+  const text = `🔥 DÉFI QUIZ LOCK 🔥\nJ'ai fait ${score}/100 ! Qui peut me battre ? 😎 #QuizLock #Afrotaku`;
+  const url = 'https://quiz-lock.vercel.app';
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'DÉFI QUIZ LOCK',
+      text: text,
+      url: url,
+    }).then(() => console.log('Partage réussi'))
+      .catch((error) => console.log('Erreur de partage', error));
+  } else {
+    // Fallback si le navigateur ne supporte pas (rare sur mobile)
+    this.shareOnWhatsApp();
+  }
+}
+
+shareOnFB() {
+  const url = 'https://quiz-lock.vercel.app';
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
 }

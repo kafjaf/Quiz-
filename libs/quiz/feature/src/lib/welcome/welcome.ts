@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Button, Modal } from '@quiz-lock/shared-ui';
 import { IdentityStore } from '@quiz-lock/identity-data-access';
 import { QuizStore } from '@quiz-lock/quiz-data-access';
+import { LucideAngularModule } from 'lucide-angular'; 
 
 @Component({
   selector: 'ql-welcome',
   standalone: true,
-  imports: [CommonModule, FormsModule, Button], //, Modal
+  imports: [CommonModule, FormsModule, Button, LucideAngularModule], //, Modal
   templateUrl: './welcome.html',
   styleUrl: './welcome.css',
 })
@@ -18,21 +19,28 @@ export class Welcome {
 
   startQuiz = output<void>();
   tempPseudo = signal('');
+   // Signal pour gérer le décompte (0 = pas de décompte)
+  count = signal<number | string>(0);
+
+   // OST Survival (Instance unique)
+  private survivalMusic = new Audio('assets/audio/survival-hype.mp3');
 
   showFounderModal = signal(false);
   isFounder = signal(localStorage.getItem('ql_founder') === 'true');
   email = signal('');
 
-  // Signal pour gérer le décompte (0 = pas de décompte)
-  count = signal<number | string>(0);
+ 
 
   start() {
     // N'oublie pas de changer l'accès ici aussi
     const pseudoClean = this.tempPseudo().trim();
     if (pseudoClean.length >= 3) {
       this.store.savePseudo(pseudoClean);
-      this.quizStore.startQuiz();
-      this.startQuiz.emit();
+
+      // this.quizStore.startQuiz();
+      // this.startQuiz.emit();
+      // 🟢 ON LANCE LE DÉCOMPTE AU LIEU DU JEU DIRECT
+      this.runCountdown(); 
     } else {
       alert('Pseudo trop court !');
     }
@@ -41,6 +49,9 @@ export class Welcome {
   private runCountdown() {
     let current = 3;
     this.count.set(current);
+
+
+  this.survivalMusic.play();
 
     const interval = setInterval(() => {
       current--;
@@ -72,5 +83,10 @@ export class Welcome {
     // Redirige vers ton numéro (format international sans le +)
     // Remplace 24206XXXXXX par ton vrai numéro
     window.open(`https://wa.me/242056435216?text=${encodedMessage}`, '_blank');
+  }
+
+   private playHypeMusic() {
+    this.survivalMusic.volume = 0.4;
+    this.survivalMusic.play().catch(e => console.log("Audio bloqué par le navigateur"));
   }
 }
