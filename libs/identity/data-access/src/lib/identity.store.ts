@@ -16,5 +16,9 @@ export const IdentityStore = signalStore(
       localStorage.setItem('ql_pseudo', newPseudo);
       patchState(store, { pseudo: newPseudo });
     },
-  }))
+    clearIdentity() {
+      localStorage.removeItem('ql_pseudo');
+      patchState(store, { pseudo: '' });
+    },
+  })),
 );

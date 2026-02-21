@@ -228,77 +228,40 @@
     </div>
 
     <!-- 3. GRILLE DE PROPAGANDE (Partage) -->
-    <div class="w-full mb-8">
-      <p
-        class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500 mb-4 italic"
-      >
-        Propager le défi
-      </p>
-      <div class="grid grid-cols-4 gap-4">
-        <button
-          (click)="shareOnWhatsApp()"
-          class="flex flex-col items-center gap-1.5"
-        >
-          <div
-            class="w-12 h-12 bg-[#25D366]/10 border border-[#25D366]/20 rounded-xl flex items-center justify-center"
-          >
-            <lucide-icon
-              name="message-circle"
-              class="w-5 h-5 text-[#25D366]"
-            ></lucide-icon>
-          </div>
-          <span class="text-[8px] font-bold text-gray-500">WHATSAPP</span>
-        </button>
-
-        <button
-          (click)="nativeShare()"
-          class="flex flex-col items-center gap-1.5"
-        >
-          <div
-            class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center"
-          >
-            <lucide-icon
-              name="share-2"
-              class="w-5 h-5 text-white"
-            ></lucide-icon>
-          </div>
-          <span class="text-[8px] font-bold text-gray-500">AUTRES</span>
-        </button>
-
-        <button
-          (click)="shareOnFB()"
-          class="flex flex-col items-center gap-1.5"
-        >
-          <div
-            class="w-12 h-12 bg-[#1877F2]/10 border border-[#1877F2]/20 rounded-xl flex items-center justify-center"
-          >
-            <lucide-icon
-              name="facebook"
-              class="w-5 h-5 text-[#1877F2]"
-            ></lucide-icon>
-          </div>
-          <span class="text-[8px] font-bold text-gray-500">FACEBOOK</span>
-        </button>
-        <button
-          (click)="nativeShare()"
-          class="flex flex-col items-center gap-1.5 active:scale-95 transition-all"
-        >
-          <div
-            class="w-12 h-12 bg-[#E4405F]/10 border border-[#E4405F]/20 rounded-xl flex items-center justify-center"
-          >
-            <!-- On utilise une couleur rose/orange dégradée pour simuler Insta si tu veux, ou juste le texte -->
-            <lucide-icon
-              name="instagram"
-              class="w-5 h-5 text-[#E4405F]"
-            ></lucide-icon>
-          </div>
-          <span class="text-[8px] font-bold text-gray-500 uppercase"
-            >Instagram</span
-          >
-        </button>
+   <div class="w-full mb-8">
+  <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 mb-4 italic">
+    Propager le défi
+  </p>
+  
+  <!-- Passage à 3 colonnes pour un équilibre parfait -->
+  <div class="grid grid-cols-3 gap-3">
+    
+    <!-- WhatsApp (Le roi du partage au Congo) -->
+    <button (click)="shareOnWhatsApp()" class="flex flex-col items-center gap-2 active:scale-95 transition-all">
+      <div class="w-full aspect-square bg-[#25D366]/10 border border-[#25D366]/20 rounded-xl flex items-center justify-center">
+        <lucide-icon name="message-circle" class="w-6 h-6 text-[#25D366]"></lucide-icon>
       </div>
-    </div>
+      <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest">WhatsApp</span>
+    </button>
 
+    <!-- Facebook (Très utilisé également) -->
+    <button (click)="shareOnFB()" class="flex flex-col items-center gap-2 active:scale-95 transition-all">
+      <div class="w-full aspect-square bg-[#1877F2]/10 border border-[#1877F2]/20 rounded-xl flex items-center justify-center">
+        <lucide-icon name="facebook" class="w-6 h-6 text-[#1877F2]"></lucide-icon>
+      </div>
+      <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Facebook</span>
+    </button>
+
+    <!-- Native Share (Toutes les autres options) -->
+    <button (click)="nativeShare()" class="flex flex-col items-center gap-2 active:scale-95 transition-all">
+      <div class="w-full aspect-square bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
+        <lucide-icon name="share-2" class="w-6 h-6 text-white"></lucide-icon>
+      </div>
+      <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Autres</span>
+    </button>
+
+  </div>
+</div>
     <!-- 4. ACTIONS DE JEU -->
     <div class="w-full flex gap-3">
       <button
@@ -324,6 +287,7 @@
     </div>
   </div>
   }
+  
 
   <!-- MODALE PREMIUM (S'affiche par dessus tout) -->
   @if (isPremiumModalOpen()) {
