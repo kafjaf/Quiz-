@@ -7,13 +7,19 @@ import { QuizStore } from '@quiz-lock/quiz-data-access';
 // import { Button } from "@quiz-lock/shared-ui";
 import { LeaderboardFeature } from '@quiz-lock/leaderboard-feature';
 import { SwUpdate } from '@angular/service-worker';
-import { LucideAngularModule } from 'lucide-angular'; 
-
+import { LucideAngularModule } from 'lucide-angular';
 
 type AppView = 'intro' | 'welcome' | 'game' | 'leaderboard';
 @Component({
   standalone: true,
-  imports: [RouterModule, Welcome, QuizGame, LeaderboardFeature, Intro, LucideAngularModule], //NxWelcome,
+  imports: [
+    RouterModule,
+    Welcome,
+    QuizGame,
+    LeaderboardFeature,
+    Intro,
+    LucideAngularModule,
+  ], //NxWelcome,
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -26,7 +32,11 @@ export class App {
 
   currentView = signal<AppView>(this.getInitialView());
 
+  // Détection ultra-précise de l'iPhone + Safari
+  showIosInstallManual = signal(false);
+
   constructor() {
+    this.detectIosInstallation();
     // 1. LOGIQUE DE JEU : Si on a déjà un pseudo, on prépare le quiz
     if (this.identityStore.pseudo()) {
       this.quizStore.startQuiz();
@@ -36,11 +46,16 @@ export class App {
     this.checkPwaUpdate();
   }
 
-   // Le "cerveau" de l'installation
+  // Le "cerveau" de l'installation
   deferredPrompt = signal<any>(null);
   isIos = signal(/iPad|iPhone|iPod/.test(navigator.userAgent));
-  isInStandaloneMode = signal(('standalone' in window.navigator) && ((window.navigator as any).standalone));
+  // isInStandaloneMode = signal(('standalone' in window.navigator) && ((window.navigator as any).standalone));
 
+  isInStandaloneMode = signal(
+    window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone ||
+      document.referrer.includes('android-app://'),
+  );
 
   @HostListener('window:beforeinstallprompt', ['$event'])
   onBeforeInstallPrompt(e: any) {
@@ -51,8 +66,7 @@ export class App {
     console.log("✅ L'app est prête à être installée sur Android/PC");
   }
 
-
-   async triggerInstall() {
+  async triggerInstall() {
     const prompt = this.deferredPrompt();
     if (!prompt) return;
 
@@ -89,9 +103,7 @@ export class App {
     this.currentView.set('game');
   }
 
-
-
-   private getInitialView(): AppView {
+  private getInitialView(): AppView {
     if (!localStorage.getItem('ql_intro_seen')) return 'intro';
     return this.identityStore.pseudo() ? 'game' : 'welcome';
   }
@@ -106,5 +118,14 @@ export class App {
     this.currentView.set('welcome');
   }
 
-  
+  private detectIosInstallation() {
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isStandalone =
+      'standalone' in window.navigator && (window.navigator as any).standalone;
+
+    // On n'affiche l'aide que si c'est un iPhone ET que l'app n'est pas encore installée
+    if (isIos && !isStandalone) {
+      this.showIosInstallManual.set(true);
+    }
+  }
 }

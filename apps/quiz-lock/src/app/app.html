@@ -1,5 +1,38 @@
 <main class="bg-slate-950 min-h-screen">
 
+  <!-- BANNIÈRE D'INSTALLATION IOS (S'affiche en haut) -->
+@if (showIosInstallManual()) {
+  <div class="fixed top-4 left-4 right-4 z-[250] animate-slideDown">
+    <div class="bg-blue-600 border border-blue-400 text-white p-4 rounded-2xl shadow-2xl relative overflow-hidden">
+      
+      <!-- Bouton fermer -->
+      <button (click)="showIosInstallManual.set(false)" class="absolute top-2 right-2 opacity-50">
+        <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
+      </button>
+
+      <div class="flex items-start gap-4">
+        <div class="bg-white/20 p-2 rounded-xl">
+          <lucide-icon name="apple" class="w-6 h-6 text-white"></lucide-icon>
+        </div>
+        
+        <div class="space-y-2">
+          <p class="text-xs font-black uppercase tracking-widest">Installer sur iPhone</p>
+          <p class="text-[10px] leading-relaxed opacity-90">
+            Pour une immersion totale : <br>
+            1. Appuyez sur le bouton <lucide-icon name="share" class="w-3 h-3 inline-block mx-1"></lucide-icon> (en bas du navigateur) <br>
+            2. Choisissez <span class="font-bold underline">"Sur l'écran d'accueil"</span>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Petite flèche animée qui pointe vers le bas de l'écran -->
+      <div class="mt-2 flex justify-center animate-bounce">
+         <lucide-icon name="chevron-down" class="w-4 h-4 text-blue-200"></lucide-icon>
+      </div>
+    </div>
+  </div>
+}
+
   <!-- BANNIÈRE D'INSTALLATION INTELLIGENTE -->
 @if (!isInStandaloneMode()) {
   <!-- Cas Android : On a le droit de cliquer -->
