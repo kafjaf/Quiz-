@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcome } from './nx-welcome';
 import { Welcome, QuizGame, Intro } from '@quiz-lock/quiz-feature';
@@ -7,11 +7,13 @@ import { QuizStore } from '@quiz-lock/quiz-data-access';
 // import { Button } from "@quiz-lock/shared-ui";
 import { LeaderboardFeature } from '@quiz-lock/leaderboard-feature';
 import { SwUpdate } from '@angular/service-worker';
+import { LucideAngularModule } from 'lucide-angular'; 
+
 
 type AppView = 'intro' | 'welcome' | 'game' | 'leaderboard';
 @Component({
   standalone: true,
-  imports: [RouterModule, Welcome, QuizGame, LeaderboardFeature, Intro], //NxWelcome,
+  imports: [RouterModule, Welcome, QuizGame, LeaderboardFeature, Intro, LucideAngularModule], //NxWelcome,
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -21,9 +23,6 @@ export class App {
   readonly quizStore = inject(QuizStore);
   readonly identityStore = inject(IdentityStore);
   private swUpdate = inject(SwUpdate);
-
-  // On initialise la vue selon si on a déjà un pseudo ou pas
-  // currentView = signal<AppView>(this.identityStore.pseudo() ? 'game' : 'welcome');
 
   currentView = signal<AppView>(this.getInitialView());
 
@@ -35,6 +34,37 @@ export class App {
 
     // 2. LOGIQUE PWA : Vérification des mises à jour
     this.checkPwaUpdate();
+  }
+
+   // Le "cerveau" de l'installation
+  deferredPrompt = signal<any>(null);
+  isIos = signal(/iPad|iPhone|iPod/.test(navigator.userAgent));
+  isInStandaloneMode = signal(('standalone' in window.navigator) && ((window.navigator as any).standalone));
+
+
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onBeforeInstallPrompt(e: any) {
+    // 1. Empêcher Chrome d'afficher sa bannière moche par défaut
+    e.preventDefault();
+    // 2. Stocker l'événement pour plus tard
+    this.deferredPrompt.set(e);
+    console.log("✅ L'app est prête à être installée sur Android/PC");
+  }
+
+
+   async triggerInstall() {
+    const prompt = this.deferredPrompt();
+    if (!prompt) return;
+
+    // Afficher la demande officielle
+    prompt.prompt();
+
+    // Attendre la réponse de l'utilisateur
+    const { outcome } = await prompt.userChoice;
+    if (outcome === 'accepted') {
+      console.log('User accepted the install prompt');
+      this.deferredPrompt.set(null);
+    }
   }
 
   private checkPwaUpdate() {
@@ -59,13 +89,7 @@ export class App {
     this.currentView.set('game');
   }
 
-  // private getInitialView(): AppView {
-  //   const introSeen = localStorage.getItem('ql_intro_seen');
-  //   if (!introSeen) return 'intro';
 
-  //   // Si déjà vu, on regarde s'il a déjà un pseudo
-  //   return this.identityStore.pseudo() ? 'game' : 'welcome';
-  // }
 
    private getInitialView(): AppView {
     if (!localStorage.getItem('ql_intro_seen')) return 'intro';
@@ -81,4 +105,6 @@ export class App {
     this.identityStore.clearIdentity();
     this.currentView.set('welcome');
   }
+
+  
 }

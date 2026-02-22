@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Avatar } from '@quiz-lock/shared-ui';
 import { LeaderboardStore } from '@quiz-lock/leaderboard-data-access';
-import { LucideAngularModule } from 'lucide-angular'; 
+import { LucideAngularModule } from 'lucide-angular'; //LucideAngularModule
 
 
 @Component({

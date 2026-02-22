@@ -1,5 +1,37 @@
 <main class="bg-slate-950 min-h-screen">
 
+  <!-- BANNIÈRE D'INSTALLATION INTELLIGENTE -->
+@if (!isInStandaloneMode()) {
+  <!-- Cas Android : On a le droit de cliquer -->
+  @if (deferredPrompt()) {
+    <div class="fixed top-0 left-0 right-0 z-[200] p-4 animate-slideDown">
+      <button (click)="triggerInstall()" 
+        class="w-full bg-blue-600 border border-blue-400 text-white p-3 rounded-xl flex items-center justify-between shadow-2xl shadow-blue-500/40">
+        <div class="flex items-center gap-3 text-left">
+          <lucide-icon name="zap" class="w-5 h-5 text-white"></lucide-icon>
+          <div>
+            <p class="text-[10px] font-black uppercase leading-none">Installer Quiz Lock</p>
+            <p class="text-[8px] text-blue-100 opacity-70">Plus rapide, zéro data, mode survie.</p>
+          </div>
+        </div>
+        <lucide-icon name="chevron-right" class="w-4 h-4"></lucide-icon>
+      </button>
+    </div>
+  }
+
+  <!-- Cas iOS : On donne juste le conseil -->
+  @if (isIos() && !deferredPrompt()) {
+    <div class="fixed top-0 left-0 right-0 z-[200] p-4 animate-slideDown">
+      <div class="w-full bg-slate-900 border border-white/10 text-white p-3 rounded-xl flex items-center gap-3 shadow-2xl">
+        <lucide-icon name="info" class="w-5 h-5 text-blue-500"></lucide-icon>
+        <p class="text-[9px] font-medium leading-tight">
+          Sur iPhone : cliquez sur <lucide-icon name="share-2" class="w-3 h-3 inline"></lucide-icon> 
+          puis <span class="text-blue-400 font-bold">"Sur l'écran d'accueil"</span> pour installer.
+        </p>
+      </div>
+    </div>
+  }
+}
   @if (currentView() === 'intro') {
     <ql-intro (finish)="completeIntro()"></ql-intro>
   }
