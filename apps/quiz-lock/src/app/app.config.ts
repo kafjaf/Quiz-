@@ -45,6 +45,8 @@ import {
   ExternalLink,
   BarChart3,
   Target,
+  Sun,
+  Moon
 
 } from 'lucide-angular';
 
@@ -76,7 +78,9 @@ export const appConfig: ApplicationConfig = {
         MessageCircle,
         Users,
         BarChart3,
-        Target
+        Target,
+        Sun,
+        Moon
       })
     )
   ],

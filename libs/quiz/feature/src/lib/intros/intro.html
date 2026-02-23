@@ -1,62 +1,86 @@
-<div class="h-[100dvh] bg-slate-950 text-white flex flex-col p-4 overflow-hidden selection:bg-blue-500 justify-between">
-  
-  <!-- 1. HEADER (Minimaliste) -->
-  <header class="flex flex-col items-center pt-2 animate-fade-in">
-    <img src="/icons/web-app-manifest-192x192.png" alt="Logo" class="w-10 h-10 mb-1">
-    <span class="text-[7px] font-black tracking-[0.4em] uppercase text-gray-600">Projet Quiz Lock</span>
+<div
+  class="h-[100dvh] bg-app-bg text-app-text flex flex-col p-6 overflow-hidden justify-between transition-colors duration-500"
+>
+  <header class="flex justify-between items-center shrink-0">
+    <img
+      src="/icons/web-app-manifest-192x192.png"
+      alt="Logo"
+      class="w-10 h-10"
+    />
+
+    <!-- Bouton Switcher V2 -->
+    <button
+      (click)="theme.toggleTheme()"
+      class="group p-2.5 rounded-xl bg-app-card border border-app-border shadow-lg active:scale-90 transition-all duration-300"
+      [title]="theme.darkMode() ? 'Passer au mode clair' : 'Passer au mode sombre'"
+    >
+      <!-- On affiche le soleil en mode sombre et la lune en mode clair -->
+      @if (theme.darkMode()) {
+      <lucide-icon
+        name="sun"
+        class="w-5 h-5 text-yellow-500 animate-fade-in"
+        [strokeWidth]="2"
+      >
+      </lucide-icon>
+      } @else {
+      <lucide-icon
+        name="moon"
+        class="w-5 h-5 text-blue-600 animate-fade-in"
+        [strokeWidth]="2"
+      >
+      </lucide-icon>
+      }
+    </button>
   </header>
 
-  <!-- 2. MAIN CONTENT (Centré et tassé) -->
-  <main class="flex-1 flex flex-col justify-center space-y-4">
-    
-    <!-- TITRE (Réduit pour mobile) -->
-    <div class="animate-slide-up">
-      <h1 class="text-3xl font-black italic tracking-tighter leading-none uppercase">
-        Félicitations, <br />
-        <span class="text-blue-600 text-4xl">Bande de génies.</span>
-      </h1>
-    </div>
+  <main class="flex-1 flex flex-col justify-center space-y-6">
+    <h1
+      class="text-3xl font-black italic tracking-tighter leading-none uppercase"
+    >
+      FÉLICITATIONS, <br />
+      <span class="text-brand text-4xl">BANDE DE GÉNIES.</span>
+    </h1>
 
-    <!-- CITATION (Plus compacte) -->
-    <div class="animate-slide-up-delay-1">
-      <div class="flex items-center gap-2 mb-1">
-        <div class="w-1 h-1 bg-blue-600"></div>
-        <span class="text-[10px] font-bold text-blue-600  tracking-widest">Sender: Oxymore</span>
+    <div class="space-y-2">
+      <div class="flex items-center gap-2">
+        <div class="w-1 h-1 bg-brand"></div>
+        <span class="text-[10px] font-bold text-brand uppercase tracking-widest"
+          >Sender: Oxymore</span
+        >
       </div>
-      
+
       <div class="relative">
-        <div class="absolute -left-3 top-0 bottom-0 w-0.5 bg-blue-600"></div>
-        <div class="bg-blue-600/5 p-4 italic text-sm text-gray-300 leading-snug border border-white/5">
+        <div
+          class="absolute -left-3 top-0 bottom-0 w-0.5 bg-brand shadow-[0_0_10px_rgba(59,130,246,0.5)]"
+        ></div>
+        <div
+          class="bg-app-card p-4 italic text-sm leading-snug border border-app-border"
+        >
           "Le monde n'a pas besoin d'un énième fan de manga. <br />
-          Il a besoin d'un <span class="text-white font-bold">survivant</span>."
+          Il a besoin d'un
+          <span class="font-black underline decoration-brand">survivant</span>."
         </div>
       </div>
     </div>
 
-    <!-- ACTION (Bouton et Teasing) -->
-    <div class="space-y-4 animate-slide-up-delay-2">
-      <button (click)="finishIntro()"
-        class="w-full bg-white text-black py-4 rounded-sm font-black uppercase text-xs tracking-[0.2em] 
-               flex items-center justify-center gap-3 relative overflow-hidden active:scale-95 transition-all animate-button-pulse"
-      >
-        <lucide-icon name="zap" class="w-4 h-4 text-blue-600" [strokeWidth]="3"></lucide-icon>
-        <span>ENTRER DANS LE PROJET</span>
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent -translate-x-full animate-shimmer"></div>
-      </button>
-
-      <div class="text-center">
-        <p class="text-[9px] text-gray-500 font-bold uppercase tracking-widest leading-none">
-          Accès : <span class="text-green-500 italic">Gratuit</span>
-          <span class="mx-2 text-gray-800">|</span>
-          <span class="text-blue-400 opacity-80 italic">Pro : Bientôt(500FCA/mois)</span>
-        </p>
-      </div>
-    </div>
+    <!-- BOUTON DYNAMIQUE (Il s'inverse selon le thème) -->
+    <button
+      (click)="finishIntro()"
+      class="w-full bg-app-text text-app-bg py-4 rounded-sm font-black uppercase text-xs tracking-[0.2em] flex items-center justify-center gap-3 relative overflow-hidden active:scale-95 transition-all shadow-xl animate-button-pulse"
+    >
+      <lucide-icon name="zap" class="w-4 h-4" [strokeWidth]="3"></lucide-icon>
+      <span>ENTRER DANS LE PROJET</span>
+    </button>
   </main>
 
-  <!-- 3. FOOTER (Une seule ligne) -->
-  <footer class="pb-2 flex justify-between border-t border-white/5 pt-2 opacity-30 animate-fade-in">
-    <a href="https://chat.whatsapp.com/D1r3pRZoiHc0E9WpIpzetW" target="_blank" class="text-[9px] font-bold uppercase tracking-tighter">Afrotaku</a>
-    <a href="https://www.linkedin.com/in/erasme-mayetela-b6229a209/" target="_blank" class="text-[9px] font-bold uppercase tracking-tighter">Architecte (Dev)</a>
+  <footer
+    class="flex justify-between border-t border-app-border pt-4 pb-2 opacity-50"
+  >
+    <span class="text-[7px] font-bold uppercase tracking-tighter"
+      >Afrotaku</span
+    >
+    <span class="text-[7px] font-bold uppercase tracking-tighter"
+      >Architecte (Dev)</span
+    >
   </footer>
 </div>

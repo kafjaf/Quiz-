@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { Button } from '@quiz-lock/shared-ui';
 import { LucideAngularModule } from 'lucide-angular'; 
+import { ThemeService } from '@quiz-lock/shared-util'; 
 
 
 @Component({
@@ -14,6 +15,7 @@ import { LucideAngularModule } from 'lucide-angular';
 export class Intro {
    // Signal de sortie pour notifier l'App qu'on a fini l'intro
   finish = output<void>();
+   public theme = inject(ThemeService); 
 
   finishIntro() {
     this.finish.emit();

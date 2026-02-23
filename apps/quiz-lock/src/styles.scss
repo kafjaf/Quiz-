@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer utilities {
   .animate-glow-slow {
     background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #020617);
@@ -17,9 +16,35 @@
   100% { background-position: 0% 50%; }
 }
 
+:root {
+  /* MODE CLAIR "ICE" - Plus doux pour les yeux */
+  --bg-color: #e2e8f0;      /* Slate 200 au lieu de 50 : moins blanc, plus "tech" */
+  --text-color: #0f172a;    /* Slate 900 */
+  --card-bg: #f1f5f9;       /* Slate 100 pour détacher les cartes du fond */
+  --border-color: #cbd5e1;  /* Slate 300 */
+  --brand-blue: #1d4ed8;    /* Bleu plus profond pour le contraste sur fond clair */
+}
+
+.dark {
+  /* MODE SOMBRE - Ton design Blue Lock original */
+  --bg-color: #020617;      /* Slate 950 */
+  --text-color: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --brand-blue: #3b82f6;    /* Bleu électrique */
+}
 
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #020617;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Utilitaires réutilisables */
+.text-app-text { color: var(--text-color); }
+.bg-app-bg { background-color: var(--bg-color); }
+.bg-app-card { background-color: var(--card-bg); }
+.border-app-border { border-color: var(--border-color); }
+.text-brand { color: var(--brand-blue); }
