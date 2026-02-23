@@ -1,7 +1,7 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcome } from './nx-welcome';
-import { Welcome, QuizGame, Intro } from '@quiz-lock/quiz-feature';
+import { Welcome, QuizGame, Intro, Intel } from '@quiz-lock/quiz-feature';
 import { IdentityStore } from '@quiz-lock/identity-data-access';
 import { QuizStore } from '@quiz-lock/quiz-data-access';
 // import { Button } from "@quiz-lock/shared-ui";
@@ -9,7 +9,7 @@ import { LeaderboardFeature } from '@quiz-lock/leaderboard-feature';
 import { SwUpdate } from '@angular/service-worker';
 import { LucideAngularModule } from 'lucide-angular';
 
-type AppView = 'intro' | 'welcome' | 'game' | 'leaderboard';
+type AppView = 'intro' | 'welcome' | 'game' | 'leaderboard' | 'intel';
 @Component({
   standalone: true,
   imports: [
@@ -18,6 +18,7 @@ type AppView = 'intro' | 'welcome' | 'game' | 'leaderboard';
     QuizGame,
     LeaderboardFeature,
     Intro,
+    Intel,
     LucideAngularModule,
   ], //NxWelcome,
   selector: 'app-root',
@@ -103,15 +104,33 @@ export class App {
     this.currentView.set('game');
   }
 
+  // private getInitialView(): AppView {
+  //   if (!localStorage.getItem('ql_intro_seen')) return 'intro';
+  //   return this.identityStore.pseudo() ? 'game' : 'welcome';
+  // }
+
   private getInitialView(): AppView {
-    if (!localStorage.getItem('ql_intro_seen')) return 'intro';
-    return this.identityStore.pseudo() ? 'game' : 'welcome';
+  // 1. Est-ce qu'il a déjà vu le discours d'Ego ?
+  const introSeen = localStorage.getItem('ql_intro_seen');
+  if (!introSeen) return 'intro';
+
+  // 2. S'il a vu l'intro mais n'a pas encore de pseudo, il va sur le Portail
+  if (!this.identityStore.pseudo()) {
+    return 'intel';
   }
+
+  // 3. S'il a déjà un pseudo, il est prêt pour le marathon
+  return 'game';
+}
 
   completeIntro() {
     localStorage.setItem('ql_intro_seen', 'true');
-    this.currentView.set('welcome');
+    this.currentView.set('welcome'); // Après l'intro, on va sur Intel
   }
+
+  startSurvival() {
+  this.currentView.set('welcome'); // Depuis Intel, on lance le mode Survival
+}
 
   logout() {
     this.identityStore.clearIdentity();

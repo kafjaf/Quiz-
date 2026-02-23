@@ -35,21 +35,6 @@ export class Welcome {
 
  
 
-  // start() {
-  //   // N'oublie pas de changer l'accès ici aussi
-  //   const pseudoClean = this.tempPseudo().trim();
-  //   if (pseudoClean.length >= 3) {
-  //     this.store.savePseudo(pseudoClean);
-
-  //     // this.quizStore.startQuiz();
-  //     // this.startQuiz.emit();
-  //     // 🟢 ON LANCE LE DÉCOMPTE AU LIEU DU JEU DIRECT
-  //     this.runCountdown(); 
-  //   } else {
-  //     alert('Pseudo trop court !');
-  //   }
-  // }
-
   start() {
     const pseudoClean = this.tempPseudo().trim();
     
