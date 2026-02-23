@@ -5,6 +5,7 @@ import { Button, Modal } from '@quiz-lock/shared-ui';
 import { IdentityStore } from '@quiz-lock/identity-data-access';
 import { QuizStore } from '@quiz-lock/quiz-data-access';
 import { LucideAngularModule } from 'lucide-angular'; 
+import { ThemeService } from '@quiz-lock/shared-util';
 
 @Component({
   selector: 'ql-welcome',
@@ -16,6 +17,7 @@ import { LucideAngularModule } from 'lucide-angular';
 export class Welcome {
   readonly store = inject(IdentityStore);
   readonly quizStore = inject(QuizStore);
+   public theme = inject(ThemeService);
 
   startQuiz = output<void>();
   tempPseudo = signal('');

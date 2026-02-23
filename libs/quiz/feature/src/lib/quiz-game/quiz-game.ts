@@ -4,6 +4,8 @@ import { IdentityStore } from '@quiz-lock/identity-data-access';
 import { QuizStore } from '@quiz-lock/quiz-data-access';
 import { Button, ProgressBar } from '@quiz-lock/shared-ui';
 import { LucideAngularModule } from 'lucide-angular';
+import { ThemeService } from '@quiz-lock/shared-util';
+
 
 @Component({
   selector: 'ql-quiz-game',
@@ -17,6 +19,9 @@ export class QuizGame {
   readonly identityStore = inject(IdentityStore);
   showLeaderboard = output<void>();
   resetIdentityRequested = output<void>();
+  public theme = inject(ThemeService);
+  showResetConfirm = signal(false);
+  
 
   // Signal pour la modale Premium
   isPremiumModalOpen = signal(false);
@@ -72,11 +77,22 @@ export class QuizGame {
     );
   }
 
-   onResetIdentity() {
-    // Une petite confirmation rapide
-    if(confirm("Nouvelle recrue ? Ton pseudo actuel sera effacé.")) {
-      this.resetIdentityRequested.emit();
-    }
+  //  onResetIdentity() {
+  //   // Une petite confirmation rapide
+  //   if(confirm("Nouvelle recrue ? Ton pseudo actuel sera effacé.")) {
+  //     this.resetIdentityRequested.emit();
+  //   }
+  // }
+
+  // Appelée au clic sur le petit bouton "Changer d'attaquant"
+  openResetModal() {
+    this.showResetConfirm.set(true);
+  }
+
+  // Appelée si l'utilisateur confirme VRAIMENT
+  confirmReset() {
+    this.showResetConfirm.set(false);
+    this.resetIdentityRequested.emit();
   }
 
 
