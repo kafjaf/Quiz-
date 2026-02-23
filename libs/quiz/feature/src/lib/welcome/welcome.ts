@@ -17,12 +17,14 @@ import { ThemeService } from '@quiz-lock/shared-util';
 export class Welcome {
   readonly store = inject(IdentityStore);
   readonly quizStore = inject(QuizStore);
-   public theme = inject(ThemeService);
+  public theme = inject(ThemeService);
 
   startQuiz = output<void>();
   tempPseudo = signal('');
    // Signal pour gérer le décompte (0 = pas de décompte)
   count = signal<number | string>(0);
+  errorMessage = signal('');
+  isShaking = signal(false);
 
    // OST Survival (Instance unique)
   private survivalMusic = new Audio('assets/audio/survival-hype.mp3');
@@ -33,19 +35,43 @@ export class Welcome {
 
  
 
-  start() {
-    // N'oublie pas de changer l'accès ici aussi
-    const pseudoClean = this.tempPseudo().trim();
-    if (pseudoClean.length >= 3) {
-      this.store.savePseudo(pseudoClean);
+  // start() {
+  //   // N'oublie pas de changer l'accès ici aussi
+  //   const pseudoClean = this.tempPseudo().trim();
+  //   if (pseudoClean.length >= 3) {
+  //     this.store.savePseudo(pseudoClean);
 
-      // this.quizStore.startQuiz();
-      // this.startQuiz.emit();
-      // 🟢 ON LANCE LE DÉCOMPTE AU LIEU DU JEU DIRECT
+  //     // this.quizStore.startQuiz();
+  //     // this.startQuiz.emit();
+  //     // 🟢 ON LANCE LE DÉCOMPTE AU LIEU DU JEU DIRECT
+  //     this.runCountdown(); 
+  //   } else {
+  //     alert('Pseudo trop court !');
+  //   }
+  // }
+
+  start() {
+    const pseudoClean = this.tempPseudo().trim();
+    
+    if (pseudoClean.length >= 3) {
+      this.errorMessage.set(''); // On efface l'erreur si tout est bon
+      this.store.savePseudo(pseudoClean);
       this.runCountdown(); 
     } else {
-      alert('Pseudo trop court !');
+      // LOGIQUE D'ERREUR PRO
+      this.triggerError('Pseudo trop court (min. 3 car.)');
     }
+  }
+
+  private triggerError(msg: string) {
+    this.errorMessage.set(msg);
+    this.isShaking.set(true);
+
+    // On arrête de secouer après 500ms
+    setTimeout(() => this.isShaking.set(false), 500);
+
+    // On efface le message après 3 secondes
+    setTimeout(() => this.errorMessage.set(''), 3000);
   }
 
   private runCountdown() {

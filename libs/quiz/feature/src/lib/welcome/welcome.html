@@ -35,12 +35,37 @@
       <p class="text-sm mb-6 opacity-80 leading-relaxed  italic">Défie tes potes, domine le classement.</p>
 
       <div class="space-y-2">
-        <input type="text" [(ngModel)]="tempPseudo" placeholder="Pseudo" 
+        <!-- <input type="text" [(ngModel)]="tempPseudo" placeholder="Pseudo" 
                class="w-full bg-app-bg border border-app-border rounded-xl py-3 px-4 focus:ring-2 focus:ring-blue-500 text-base text-center font-bold outline-none text-app-text" />
 
         <button (click)="start()" class="w-full bg-brand text-gray-500 font-black py-4 rounded-xl transition-all active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.3)] uppercase text-xs tracking-widest">
            Lancer le défi
-        </button>
+        </button> -->
+         <!-- INPUT AVEC SHAKE ANIMATION -->
+  <div [class.animate-shake]="isShaking()">
+    <input
+      type="text"
+      [(ngModel)]="tempPseudo"
+      placeholder="Ton Pseudo"
+      [class]="'w-full bg-app-bg border rounded-xl py-3 px-4 focus:ring-2 transition-all text-base text-center font-bold outline-none ' + 
+               (errorMessage() ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]' : 'border-app-border focus:ring-blue-500')"
+    />
+  </div>
+
+  <!-- MESSAGE D'ERREUR DYNAMIQUE -->
+  <div class="h-4"> <!-- Hauteur fixe pour éviter que tout saute au clic -->
+    @if (errorMessage()) {
+      <div class="flex items-center justify-center gap-1 text-red-500 animate-fadeIn">
+        <lucide-icon name="alert-triangle" class="w-3 h-3" [strokeWidth]="3"></lucide-icon>
+        <span class="text-[9px] font-black uppercase tracking-widest">{{ errorMessage() }}</span>
+      </div>
+    }
+  </div>
+
+  <button (click)="start()" 
+    class="w-full bg-brand text-gray-400 font-black py-4 rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-500/30 uppercase text-xs tracking-widest">
+     Lancer le défi
+  </button>
       </div>
 
       <div class="mt-4">
@@ -52,7 +77,7 @@
         </ql-button>
         <p class="text-[8px] opacity-40 mt-2 italic uppercase">Support direct via WhatsApp</p>
       </div>
-      <p class="text-[10px] opacity-20 font-bold tracking-widest uppercase mt-4 italic">Survival v1.0</p>
+      <p class="text-[10px] opacity-20 font-bold tracking-widest uppercase mt-4 italic">Survival v1.1</p>
     </div>
   </div>
 </div>
